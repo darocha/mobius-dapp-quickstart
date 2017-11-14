@@ -1,72 +1,72 @@
-Symfony Standard Edition
+Mobius DApp Quickstart
 ========================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony
-application that you can use as the skeleton for your new applications.
+A ready-to-run Mobius DApp that can be hooked up to the app store. Just bring
+your Mobius developer account!
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
+This example lets users flip a coin. If they win, they keep their MOBI. If
+they lose, it goes to the application. This probably won't catch on as a
+popular application, so it's up to you to write a better one!
 
-What's inside?
---------------
+### Requirements
 
-The Symfony Standard Edition is configured with the following defaults:
+* PHP with SQLite installed
+* Mobius Developer account ([sign up here!](https://mobius.network/store/signup))
 
-  * An AppBundle you can use to start coding;
+### Setup
 
-  * Twig as the only configured template engine;
+Install with composer:
 
-  * Doctrine ORM/DBAL;
+```text
+composer create-project zulucrypto/mobius-dapp-quickstart
+```
 
-  * Swiftmailer;
+Enter your API key and App UID when prompted.
 
-  * Annotations enabled for everything.
+Start a web server:
 
-It comes pre-configured with the following bundles:
+```text
+cd mobius-dapp-quickstart
+bin/console server:run
+```
 
-  * **FrameworkBundle** - The core Symfony framework bundle
+Go to the URL given in the output from the previous command.
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+For example: http://localhost:8000/
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+Then, enter the email address you used when signing up for the DApp store.
+After clicking "Simulate Login" you'll see your credit balance.
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+### Development
 
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
+**App Store Service**
 
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
+The DApp store API is available as a service:
 
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
+```php
+// In a controller
+$numCredits = $this->getContainer()
+    ->get('mobius.app_store')
+    ->getBalance('user@example.com');
+```
 
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
+**Helpful Commands**
 
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
+To check a user's balance:
 
-  * [**SensioGeneratorBundle**][13] (in dev env) - Adds code generation
-    capabilities
+```bash
+$ bin/console mobius:app-store:balance
+User   : user@example.com
+Balance: 100.0
+```
 
-  * [**WebServerBundle**][14] (in dev env) - Adds commands for running applications
-    using the PHP built-in web server
+To test the webhook that gets called when a user makes a deposit:
 
-  * **DebugBundle** (in dev/test env) - Adds Debug and VarDumper component
-    integration
+```bash
+$ bin/console mobius:simulator:app-store-deposit user@example.com 100
+Simulated webhook: user@example.com now has 100 credits.
+```
 
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
+**Example Code**
 
-Enjoy!
-
-[1]:  https://symfony.com/doc/3.3/setup.html
-[6]:  https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  https://symfony.com/doc/3.3/doctrine.html
-[8]:  https://symfony.com/doc/3.3/templating.html
-[9]:  https://symfony.com/doc/3.3/security.html
-[10]: https://symfony.com/doc/3.3/email.html
-[11]: https://symfony.com/doc/3.3/logging.html
-[13]: https://symfony.com/doc/current/bundles/SensioGeneratorBundle/index.html
-[14]: https://symfony.com/doc/current/setup/built_in_web_server.html
+See `src/AppBundle/Controller/CoinFlipController.php` for the code that implements this DApp
