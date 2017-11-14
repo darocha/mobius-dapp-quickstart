@@ -5,22 +5,15 @@
         <div class="jumbotron mt-3">
             <h1 class="display-3">Mobius DApp Quickstart</h1>
 
-            <p class="lead">
-                To get started, use the simulator command to give credits to a test user:
-            </p>
-            <code>
-                $ bin/console mobius:simulator:app-store-deposit user@example.com 100
-            </code>
-
             <div class="mt-3">
                 <p class="lead">
-                    Then, log in as that user:
+                    Enter your DApp store email:
                 </p>
             </div>
 
             <div>
                 <form method="GET" action="/coin-flip">
-                    <input type="text" name="email" value="user@example.com">
+                    <input type="text" name="email" placeholder="user@example.com">
                     <input type="submit" value="Simulate Login">
                 </form>
             </div>
