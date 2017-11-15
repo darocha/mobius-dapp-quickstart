@@ -13,6 +13,12 @@ popular application, so it's up to you to write a better one!
 * PHP with SQLite installed
 * Mobius Developer account ([sign up here!](https://mobius.network/store/signup))
 
+### Features
+
+* Working DApp right out of the box
+* Includes webhook handler that automatically creates users and syncs their balances
+* Helpful commands for testing
+
 ### Setup
 
 Install with composer:
